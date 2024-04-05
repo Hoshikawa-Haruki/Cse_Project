@@ -15,7 +15,7 @@ public class TestDrive {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("hello World!");
+        System.out.println("종강하고 싶다");
 
     }
 
