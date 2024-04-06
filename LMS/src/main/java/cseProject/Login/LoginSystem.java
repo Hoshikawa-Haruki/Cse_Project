@@ -23,12 +23,31 @@ public class LoginSystem {
         userDB = new ArrayList<>(); // 유저 정보를 담을 객체배열
         helper = new SystemHelper(); // 시스템 헬퍼 호출
     }
-    
+
     public void make_ID() throws IOException {
-        String newID = helper.getUserInput();
-        String newPW = helper.getUserInput();
+        System.out.println("생성 할 ID를 입력하세요");
+        String newID;
+        do {
+            newID = helper.getUserInput();
+            if (newID.length() < 4) {
+                System.out.println("ID는 4자리 이상 입력해주세요.");
+                System.out.println("다시 입력해주세요.");
+            }
+        } while (newID.length() < 4);
+
+        System.out.println("생성 할 PW를 입력하세요");
+        String newPW;
+        do {
+            newPW = helper.getUserInput();
+            if (newPW.length() < 4) {
+                System.out.println("PW는 4자리 이상 입력해주세요.");
+                System.out.println("다시 입력해주세요.");
+            }
+        } while (newPW.length() < 4);
+
+        System.out.println("이름을 입력하세요");
         String newName = helper.getUserInput();
-        
+
         User newUser = new User(newID, newPW, newName);
         userDB.add(newUser);
         System.out.println("회원가입이 완료되었습니다.");
@@ -38,9 +57,9 @@ public class LoginSystem {
         System.out.println("로그인을 시도 합니다.");
 
         do {
-            System.out.println("ID : ");
+            System.out.print("ID : ");
             String ID = helper.getUserInput();
-            System.out.println("PW : ");
+            System.out.print("PW : ");
             String PW = helper.getUserInput();
 
             for (User check_user : userDB) {
@@ -51,17 +70,19 @@ public class LoginSystem {
                     break;
                 }
             }
-            
+
             if (loginUser == null) {
                 System.out.println("로그인 정보를 찾을 수 없습니다.");
             }
-            
+
         } while (loginUser == null);
     }
-    
-    public User runLoginSystem() throws IOException{
+
+    public User runLoginSystem() throws IOException {
         init();
-        System.out.println("1. 회원강");
+        System.out.println("1. 회원가입");
+        make_ID();
+        System.out.println("2. 로그인시도");
         try_Login();
         return loginUser;
     }
