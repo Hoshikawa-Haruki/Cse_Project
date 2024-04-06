@@ -24,17 +24,13 @@ public class LoginSystem {
         helper = new SystemHelper(); // 시스템 헬퍼 호출
     }
     
-    public void make_ID(String ID, String PW) throws IOException {
-        User newUser = new User(ID, PW);
+    public void make_ID() throws IOException {
         String newID = helper.getUserInput();
         String newPW = helper.getUserInput();
         String newName = helper.getUserInput();
-
-        newUser.setUserID(newID);
-        newUser.setUserPW(newPW);
-        newUser.setUserName(newName);
-        userDB.add(newUser);
         
+        User newUser = new User(newID, newPW, newName);
+        userDB.add(newUser);
         System.out.println("회원가입이 완료되었습니다.");
     }
 
@@ -65,6 +61,7 @@ public class LoginSystem {
     
     public User runLoginSystem() throws IOException{
         init();
+        System.out.println("1. 회원강");
         try_Login();
         return loginUser;
     }

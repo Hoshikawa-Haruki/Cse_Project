@@ -22,8 +22,8 @@ public class User {
         this.isManager = isManager;
     }
 
-    public User(String userID, String userPW) {
-        this(userID, userPW, "", false);
+    public User(String userID, String userPW, String userName) {
+        this(userID, userPW, userName, false);
     }
 
     public String getUserID() {
