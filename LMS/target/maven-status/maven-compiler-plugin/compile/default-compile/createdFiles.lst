@@ -2,3 +2,5 @@ cseProject\SystemHelper.class
 cseProject\Login\User.class
 cseProject\TestDrive.class
 cseProject\Login\LoginSystem.class
+cseProject\Login\UserFactory.class
+cseProject\MainWindow\ShowMain.class

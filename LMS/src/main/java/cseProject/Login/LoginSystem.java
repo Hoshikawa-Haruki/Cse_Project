@@ -48,14 +48,34 @@ public class LoginSystem {
         System.out.println("이름을 입력하세요");
         String newName = helper.getUserInput();
 
-        User newUser = new User(newID, newPW, newName);
+        // 관리자로 가입하는 기능 추가
+        System.out.println("관리자로 가입하시겠습니까? (y/n)");
+        String isManagerChoice = helper.getUserInput();
+        boolean isManager = false; // 일단 기본값은 일반 사용자로 설정
+
+        if (isManagerChoice.equalsIgnoreCase("y")) {
+            System.out.println("관리자 코드를 입력하세요:");
+            String managerCode = helper.getUserInput();
+            if (managerCode.equals("나는관리자")) {
+                isManager = true; // 올바른 관리자 코드를 입력했을 때만 관리자로 설정
+            } else {
+                System.out.println("올바르지 않은 관리자 코드입니다.");
+                return;
+            }
+        }
+
+        // 팩토리 메서드를 통해 사용자 객체 생성
+        User newUser = UserFactory.createUser(newID, newPW, newName, isManager);
         userDB.add(newUser);
         System.out.println("회원가입이 완료되었습니다.");
+
+        /*User newUser = new User(newID, newPW, newName);
+        userDB.add(newUser);
+        System.out.println("회원가입이 완료되었습니다.");*/ // 팩토리 메서드 미적용
     }
 
     public void try_Login() throws IOException {
-        System.out.println("로그인을 시도 합니다.");
-
+        //System.out.println("로그인을 시도 합니다.");
         do {
             System.out.print("ID : ");
             String ID = helper.getUserInput();
@@ -66,7 +86,11 @@ public class LoginSystem {
                 if (check_user.getUserID().equals(ID) && check_user.getUserPW().equals(PW)) {
                     loginUser = check_user; // 로그인 성공 시 현재 로그인한 사용자 설정
                     System.out.println("로그인 성공.");
-                    System.out.println("안녕하세요 " + loginUser.getUserName() + "님");
+                    if (check_user.getIsManager()) {
+                        System.out.println("안녕하세요 " + loginUser.getUserName() + "관리자님");
+                    } else {
+                        System.out.println("안녕하세요 " + loginUser.getUserName() + "님");
+                    }
                     break;
                 }
             }
@@ -80,10 +104,25 @@ public class LoginSystem {
 
     public User runLoginSystem() throws IOException {
         init();
-        System.out.println("1. 회원가입");
-        make_ID();
-        System.out.println("2. 로그인시도");
-        try_Login();
+        while (true) {
+            System.out.println("1. 회원가입, 2. 로그인");
+            String choice = helper.getUserInput();
+
+            if (choice.equals("1")) {
+                System.out.println("회원가입을 시작합니다.");
+                make_ID();
+            } else if (choice.equals("2")) {
+                System.out.println("로그인을 시도합니다.");
+                try_Login();
+            } else {
+                System.out.println("잘못된 입력입니다.");
+            }
+            // 회원가입 또는 로그인 후에도 다시 while 루프를 돌기 위해 루프 조건을 유지
+            // 로그인에 성공했을 때만 루프를 빠져나옴
+            if (loginUser != null) {
+                break;
+            }
+        }
         return loginUser;
     }
 }

@@ -38,7 +38,7 @@ public class User {
         return userName;
     }
 
-    public boolean isIsManager() {
+    public boolean getIsManager() {
         return isManager;
     }
 
