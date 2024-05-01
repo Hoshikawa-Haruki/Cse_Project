@@ -8,6 +8,6 @@ package cseProject.Login;
  *
  * @author 이승환
  */
-public interface LoginStrategy {
-    void make_ID (String userID, String userPW, String userName);
+public interface UserCreation_Strategy {
+    void make_User(String newuserID, String newuserPW, String newuserName, boolean newisManager);
 }

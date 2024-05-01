@@ -68,21 +68,20 @@ public class LoginSystem {
         // 관리자로 가입하는 기능 추가
         System.out.println("관리자로 가입하시겠습니까? (y/n)");
         String isManagerChoice = helper.getUserInput();
-        boolean isManager = false; // 일단 기본값은 일반 사용자로 설정
+        boolean newisManager = isManagerChoice.equalsIgnoreCase("y");
 
-        if (isManagerChoice.equalsIgnoreCase("y")) {
-            System.out.println("관리자 코드를 입력하세요:");
-            String managerCode = helper.getUserInput();
-            if (managerCode.equals("1111")) {
-                isManager = true; // 올바른 관리자 코드를 입력했을 때만 관리자로 설정
-            } else {
-                System.out.println("올바르지 않은 관리자 코드입니다.");
-                return;
-            }
+        if (newisManager) {
+            // 관리자 전략을 사용하여 가입 처리
+            Admin_UserCreation_Strategy adminStrategy = new Admin_UserCreation_Strategy();
+            adminStrategy.make_User(newID, newPW, newName, newisManager);
+        } else {
+            // 일반 사용자 전략을 사용하여 가입 처리
+            General_UserCreation_Strategy generalStrategy = new General_UserCreation_Strategy();
+            generalStrategy.make_User(newID, newPW, newName, newisManager);
         }
 
         // 팩토리 메서드를 통해 사용자 객체 생성
-        User newUser = UserFactory.createUser(newID, newPW, newName, isManager);
+        User newUser = UserFactory.createUser(newID, newPW, newName, newisManager);
         userDB.add(newUser);
         System.out.println("회원가입이 완료되었습니다.");
 
@@ -126,17 +125,16 @@ public class LoginSystem {
             String choice = helper.getUserInput();
 
             switch (choice) {
-                case "1":
+                case "1" -> {
                     System.out.println("회원가입을 시작합니다.");
                     make_ID();
-                    break;
-                case "2":
+                }
+                case "2" -> {
                     System.out.println("로그인을 시도합니다.");
                     try_Login();
-                    break;
-                default:
+                }
+                default ->
                     System.out.println("잘못된 입력입니다.");
-                    break;
             }
             // 회원가입 또는 로그인 후에도 다시 while 루프를 돌기 위해 루프 조건을 유지
             // 로그인에 성공했을 때만 루프를 빠져나옴

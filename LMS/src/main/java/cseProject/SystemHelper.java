@@ -15,6 +15,9 @@ import java.io.InputStreamReader;
  */
 public class SystemHelper {
 
+    public SystemHelper() {
+    }
+
     public String getUserInput() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = br.readLine();
