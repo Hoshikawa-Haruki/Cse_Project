@@ -14,9 +14,26 @@ import java.io.IOException;
  */
 public class LoginSystem {
 
+    private static LoginSystem instance;
     private User loginUser;
     private ArrayList<User> userDB;
     private SystemHelper helper;
+
+    // 생성자를 private으로 선언하여 외부에서 인스턴스화 방지
+    private LoginSystem() {
+        // Private 생성자
+    }
+
+    public static LoginSystem getInstance() {
+        if (instance == null) {
+            instance = new LoginSystem();
+        }
+        return instance;
+    }
+
+    public User getLoginUser() {
+        return loginUser;
+    }
 
     public void init() {
         loginUser = null; // 처음에는 아무도 로그인 안함
@@ -56,7 +73,7 @@ public class LoginSystem {
         if (isManagerChoice.equalsIgnoreCase("y")) {
             System.out.println("관리자 코드를 입력하세요:");
             String managerCode = helper.getUserInput();
-            if (managerCode.equals("나는관리자")) {
+            if (managerCode.equals("1111")) {
                 isManager = true; // 올바른 관리자 코드를 입력했을 때만 관리자로 설정
             } else {
                 System.out.println("올바르지 않은 관리자 코드입니다.");
@@ -108,14 +125,18 @@ public class LoginSystem {
             System.out.println("1. 회원가입, 2. 로그인");
             String choice = helper.getUserInput();
 
-            if (choice.equals("1")) {
-                System.out.println("회원가입을 시작합니다.");
-                make_ID();
-            } else if (choice.equals("2")) {
-                System.out.println("로그인을 시도합니다.");
-                try_Login();
-            } else {
-                System.out.println("잘못된 입력입니다.");
+            switch (choice) {
+                case "1":
+                    System.out.println("회원가입을 시작합니다.");
+                    make_ID();
+                    break;
+                case "2":
+                    System.out.println("로그인을 시도합니다.");
+                    try_Login();
+                    break;
+                default:
+                    System.out.println("잘못된 입력입니다.");
+                    break;
             }
             // 회원가입 또는 로그인 후에도 다시 while 루프를 돌기 위해 루프 조건을 유지
             // 로그인에 성공했을 때만 루프를 빠져나옴

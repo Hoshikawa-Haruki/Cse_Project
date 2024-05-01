@@ -6,7 +6,8 @@ package cseProject;
 
 import cseProject.Login.LoginSystem;
 import java.io.IOException;
-import cseProject.MainWindow.ShowMain;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 /**
  *
@@ -16,12 +17,9 @@ import cseProject.MainWindow.ShowMain;
 public class TestDrive {
 
     public static void main(String[] args) throws IOException {
-        // TODO code application logic here
-        //ShowMain ShowMain = new ShowMain();
-        LoginSystem loginSystem = new LoginSystem();
-
-        //ShowMain.runShowMain();        
-        loginSystem.runLoginSystem();
-
+        LoginSystem loginSystem = LoginSystem.getInstance();
+        //loginSystem.runLoginSystem();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println(br.readLine());
     }
 }

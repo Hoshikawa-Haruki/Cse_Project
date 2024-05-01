@@ -8,8 +8,8 @@ package cseProject.Login;
  *
  * @author 이승환
  */
-
 public class UserFactory {
+
     public static User createUser(String userID, String userPW, String userName, boolean isManager) {
         return new User(userID, userPW, userName, isManager);
     }
