@@ -21,5 +21,6 @@ public class TestDrive {
         loginSystem.runLoginSystem();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println(br.readLine());
+        System.out.println("test");
     }
 }
