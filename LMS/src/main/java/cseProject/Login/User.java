@@ -57,5 +57,4 @@ public class User {
     public void setIsManager(boolean isManager) {
         this.isManager = isManager;
     }
-
 }

@@ -18,7 +18,7 @@ public class TestDrive {
 
     public static void main(String[] args) throws IOException {
         LoginSystem loginSystem = LoginSystem.getInstance();
-        //loginSystem.runLoginSystem();
+        loginSystem.runLoginSystem();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println(br.readLine());
     }
