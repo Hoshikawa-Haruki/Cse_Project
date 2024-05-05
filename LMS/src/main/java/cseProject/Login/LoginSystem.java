@@ -4,8 +4,11 @@ package cseProject.Login;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+import cseProject.Login.User_Strategy.General_UserCreation_Strategy;
+import cseProject.Login.User_Strategy.Admin_UserCreation_Strategy;
 import java.util.ArrayList;
 import cseProject.SystemHelper;
+import cseProject.Login.User_Manager;
 import java.io.IOException;
 
 /**
@@ -15,32 +18,29 @@ import java.io.IOException;
 public class LoginSystem {
 
     private static LoginSystem instance;
-    private User loginUser;
-    private ArrayList<User> userDB;
-    private SystemHelper helper;
+    //private User_Info loginUser;
+    //private ArrayList<User_Info> userDB;
+    private static SystemHelper helper = SystemHelper.getInstance();
+    private static User_Manager manager = User_Manager.getInstance();
+//    // 생성자를 private으로 선언하여 외부에서 인스턴스화 방지
+//    private LoginSystem() {
+//        // Private 생성자
+//    }
+//
+//    public static LoginSystem getInstance() {
+//        if (instance == null) {
+//            instance = new LoginSystem();
+//        }
+//        return instance;
+//    }
 
-    // 생성자를 private으로 선언하여 외부에서 인스턴스화 방지
-    private LoginSystem() {
-        // Private 생성자
-    }
-
-    public static LoginSystem getInstance() {
-        if (instance == null) {
-            instance = new LoginSystem();
-        }
-        return instance;
-    }
-
-    public User getLoginUser() {
-        return loginUser;
-    }
-
-    public void init() {
-        loginUser = null; // 처음에는 아무도 로그인 안함
-        userDB = new ArrayList<>(); // 유저 정보를 담을 객체배열
-        helper = new SystemHelper(); // 시스템 헬퍼 호출
-    }
-
+//    public User_Info getLoginUser() {
+//        return loginUser;
+//    }
+//    public void init() {
+//        loginUser = null; // 처음에는 아무도 로그인 안함
+//        userDB = new ArrayList<>(); // 유저 정보를 담을 객체배열
+//    }
     public void make_ID() throws IOException {
         System.out.println("생성 할 ID를 입력하세요");
         String newID;
@@ -80,14 +80,10 @@ public class LoginSystem {
             generalStrategy.make_User(newID, newPW, newName, newisManager);
         }
 
-        // 팩토리 메서드를 통해 사용자 객체 생성
-        User newUser = UserFactory.createUser(newID, newPW, newName, newisManager);
-        userDB.add(newUser);
-        System.out.println("회원가입이 완료되었습니다.");
-
-        /*User newUser = new User(newID, newPW, newName);
-        userDB.add(newUser);
-        System.out.println("회원가입이 완료되었습니다.");*/ // 팩토리 메서드 미적용
+        //팩토리 메서드를 통해 사용자 객체 생성
+//        User_Info newUser = User_Factory.createUser(newID, newPW, newName, newisManager);
+//        userDB.add(newUser);
+//        System.out.println("회원가입이 완료되었습니다.");
     }
 
     public void try_Login() throws IOException {
@@ -98,28 +94,28 @@ public class LoginSystem {
             System.out.print("PW : ");
             String PW = helper.getUserInput();
 
-            for (User check_user : userDB) {
+            for (User_Info check_user : manager.getUserDB()) {
                 if (check_user.getUserID().equals(ID) && check_user.getUserPW().equals(PW)) {
-                    loginUser = check_user; // 로그인 성공 시 현재 로그인한 사용자 설정
+                    //loginUser = check_user; // 로그인 성공 시 현재 로그인한 사용자 설정 (지금은 필요없음!)
                     System.out.println("로그인 성공.");
                     if (check_user.getIsManager()) {
-                        System.out.println("안녕하세요 " + loginUser.getUserName() + "관리자님");
+                        System.out.println("안녕하세요 " + manager.getLoginUser().getUserName() + " 관리자님");
                     } else {
-                        System.out.println("안녕하세요 " + loginUser.getUserName() + "님");
+                        System.out.println("안녕하세요 " + manager.getLoginUser().getUserName() + " 님");
                     }
                     break;
                 }
             }
 
-            if (loginUser == null) {
+            if (manager.getLoginUser() == null) {
                 System.out.println("로그인 정보를 찾을 수 없습니다.");
             }
 
-        } while (loginUser == null);
+        } while (manager.getLoginUser() == null);
     }
 
-    public User runLoginSystem() throws IOException {
-        init();
+    public User_Info runLoginSystem() throws IOException {
+        //init();
         while (true) {
             System.out.println("1. 회원가입, 2. 로그인");
             String choice = helper.getUserInput();
@@ -138,10 +134,10 @@ public class LoginSystem {
             }
             // 회원가입 또는 로그인 후에도 다시 while 루프를 돌기 위해 루프 조건을 유지
             // 로그인에 성공했을 때만 루프를 빠져나옴
-            if (loginUser != null) {
+            if (manager.getLoginUser() != null) {
                 break;
             }
         }
-        return loginUser;
+        return manager.getLoginUser();
     }
 }

@@ -1,7 +1,9 @@
-cseProject\Login\User.class
 cseProject\TestDrive.class
+cseProject\Login\Admin_UserCreation_Strategy.class
+cseProject\Login\UserInfo.class
 cseProject\SystemHelper.class
 cseProject\Login\UserCreation_Strategy.class
 cseProject\Login\LoginSystem.class
 cseProject\Login\UserFactory.class
+cseProject\Login\General_UserCreation_Strategy.class
 cseProject\MainWindow\ShowMain.class

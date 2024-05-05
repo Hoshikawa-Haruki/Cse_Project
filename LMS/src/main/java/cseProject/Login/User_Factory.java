@@ -8,9 +8,9 @@ package cseProject.Login;
  *
  * @author 이승환
  */
-public class UserFactory {
+public class User_Factory {
 
-    public static User createUser(String userID, String userPW, String userName, boolean isManager) {
-        return new User(userID, userPW, userName, isManager);
+    public static User_Info createUser(String userID, String userPW, String userName, boolean isManager) {
+        return new User_Info(userID, userPW, userName, isManager);
     }
 }
